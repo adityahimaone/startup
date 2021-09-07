@@ -30,9 +30,9 @@ func main() {
 	//akan dialihkan ke register user
 	api.POST("/users", userHandler.RegisterUser)
 	api.POST("/sessions", userHandler.Login)
+	api.POST("/email_checkers", userHandler.CheckEmailAvailable)
 	router.Run()
 }
-
 
 //komentar
 
