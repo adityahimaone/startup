@@ -27,10 +27,12 @@ func main() {
 	//api versioning
 	api := router.Group("/api/v1")
 
+		 /*END POINT*/
 	//akan dialihkan ke register user
 	api.POST("/users", userHandler.RegisterUser)
 	api.POST("/sessions", userHandler.Login)
 	api.POST("/email_checkers", userHandler.CheckEmailAvailable)
+	api.POST("/avatars", userHandler.UploudAvatar)
 	router.Run()
 }
 
