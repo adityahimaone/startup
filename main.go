@@ -6,6 +6,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
+	"startup/auth"
 	"startup/handler"
 	"startup/user"
 )
@@ -20,14 +21,15 @@ func main() {
 
 	userRepository := user.NewRepository(db)
 	userService := user.NewService(userRepository)
+	authService := auth.NewService()
 
-	userHandler := handler.NewUserHandler(userService)
+	userHandler := handler.NewUserHandler(userService, authService)
 
 	router := gin.Default()
 	//api versioning
 	api := router.Group("/api/v1")
 
-		 /*END POINT*/
+	/*END POINT*/
 	//akan dialihkan ke register user
 	api.POST("/users", userHandler.RegisterUser)
 	api.POST("/sessions", userHandler.Login)
