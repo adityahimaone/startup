@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"startup/auth"
+	"startup/campaign"
 	"startup/handler"
 	"startup/helper"
 	"startup/user"
@@ -24,6 +25,18 @@ func main() {
 	fmt.Println("Connection OK")
 
 	userRepository := user.NewRepository(db)
+	campaignRepository := campaign.NewRepository(db)
+
+	campaigns, err := campaignRepository.FindByUserID(17)
+
+	for _, c := range campaigns {
+		fmt.Println(c.Name, "", c.UserId)
+		if len(c.CampaignImages) > 0 {
+			fmt.Println(c.CampaignImages[0].FileName)
+		}
+
+	}
+
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
 
