@@ -38,9 +38,7 @@ func (s *service) GetCampaignByID(req RequestCampaignDetail) (Campaign, error) {
 }
 
 func (s *service) CreateCampaign(req RequestCreateCampaign) (Campaign, error) {
-	var createReq RequestCreateCampaign
-
-	newCampaign, err := s.repository.Save(createReq.toModel())
+	newCampaign, err := s.repository.Save(req.toModel())
 	if err != nil {
 		return newCampaign, err
 	}

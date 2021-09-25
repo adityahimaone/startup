@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"startup/campaign"
 	"startup/helper"
+	"startup/user"
 	"strconv"
 )
 
@@ -73,3 +74,28 @@ ambil current user dari jwt/hanler
 panggil service, parameter input struct yg sudah di mapping dan slug
 panggil repository untuk simpan data dari service
 */
+
+func (h *campaignHandler) CreateCampaign(c *gin.Context) {
+	var req campaign.RequestCreateCampaign
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		errors := helper.FormatValidationError(err)
+		errorMessage := gin.H{"errors": errors}
+		response := helper.APIResponse("Create Campaign Failed", http.StatusUnprocessableEntity, "error", errorMessage)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+	//get user from jwt
+	currentUser := c.MustGet("currentUser").(user.User)
+	req.User = currentUser
+
+	newCampaign, err := h.service.CreateCampaign(req)
+	if err != nil {
+		response := helper.APIResponse("Create Campaign Failed", http.StatusUnprocessableEntity, "error", nil)
+		c.JSON(http.StatusUnprocessableEntity, response)
+		return
+	}
+	response := helper.APIResponse("Success Create Campaign", http.StatusOK, "succes", campaign.NewResponseCampaign(newCampaign))
+	c.JSON(http.StatusOK, response)
+	return
+}
