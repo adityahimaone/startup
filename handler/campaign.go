@@ -36,6 +36,7 @@ func (handler *campaignHandler) GetCampaigns(c *gin.Context) {
 		return
 	}
 
-	response := helper.APIResponse("List of campaigns", http.StatusOK, "success", campaigns)
+	formatter := campaign.NewResponseCampaignArray(campaigns)
+	response := helper.APIResponse("List of campaigns", http.StatusOK, "success", formatter)
 	c.JSON(http.StatusOK, response)
 }
