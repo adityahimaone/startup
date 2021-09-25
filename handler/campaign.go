@@ -66,3 +66,10 @@ func (handler *campaignHandler) GetCampaign(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 	return
 }
+
+/*
+tangkap parameter dari user ke input(dto) struct
+ambil current user dari jwt/hanler
+panggil service, parameter input struct yg sudah di mapping dan slug
+panggil repository untuk simpan data dari service
+*/

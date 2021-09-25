@@ -3,6 +3,7 @@ package campaign
 type Service interface {
 	GetCampaigns(useerID int) ([]Campaign, error)
 	GetCampaignByID(req RequestCampaignDetail) (Campaign, error)
+	CreateCampaign(req RequestCreateCampaign) (Campaign, error)
 }
 
 type service struct {
@@ -34,4 +35,14 @@ func (s *service) GetCampaignByID(req RequestCampaignDetail) (Campaign, error) {
 		return campaign, err
 	}
 	return campaign, nil
+}
+
+func (s *service) CreateCampaign(req RequestCreateCampaign) (Campaign, error) {
+	var createReq RequestCreateCampaign
+
+	newCampaign, err := s.repository.Save(createReq.toModel())
+	if err != nil {
+		return newCampaign, err
+	}
+	return newCampaign, nil
 }
