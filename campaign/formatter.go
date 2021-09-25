@@ -8,6 +8,7 @@ type ResponseCampaign struct {
 	ImageURL         string `json:"image_url"`
 	GoalAmount       int    `json:"goal_amount"`
 	CurrentAmount    int    `json:"current_amount"`
+	Slug             string `json:"slug"`
 }
 
 func NewResponseCampaign(entityCampaign Campaign) ResponseCampaign {
@@ -22,6 +23,7 @@ func NewResponseCampaign(entityCampaign Campaign) ResponseCampaign {
 		ShortDescription: entityCampaign.ShortDescription,
 		GoalAmount:       entityCampaign.GoalAmount,
 		CurrentAmount:    entityCampaign.CurrentAmount,
+		Slug:             entityCampaign.Slug,
 		ImageURL:         imageURL,
 	}
 }
