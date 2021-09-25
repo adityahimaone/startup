@@ -27,7 +27,8 @@ func NewResponseCampaign(entityCampaign Campaign) ResponseCampaign {
 }
 
 func NewResponseCampaignArray(entityCampaign []Campaign) []ResponseCampaign {
-	var result []ResponseCampaign
+	result := []ResponseCampaign{}
+
 	for _, v := range entityCampaign {
 		result = append(result, NewResponseCampaign(v))
 	}
