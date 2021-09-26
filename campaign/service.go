@@ -4,6 +4,7 @@ type Service interface {
 	GetCampaigns(useerID int) ([]Campaign, error)
 	GetCampaignByID(req RequestCampaignDetail) (Campaign, error)
 	CreateCampaign(req RequestCreateCampaign) (Campaign, error)
+	UpdateCampaign(reqUrl RequestCampaignDetail, reqBody RequestCreateCampaign) (Campaign, error)
 }
 
 type service struct {
@@ -43,4 +44,16 @@ func (s *service) CreateCampaign(req RequestCreateCampaign) (Campaign, error) {
 		return newCampaign, err
 	}
 	return newCampaign, nil
+}
+
+func (s *service) UpdateCampaign(reqUrl RequestCampaignDetail, reqBody RequestCreateCampaign) (Campaign, error) {
+	campaign, err := s.repository.FindByID(reqUrl.ID)
+	if err != nil {
+		return campaign, err
+	}
+	updatedCampaign, err := s.repository.Update(reqBody.toModel())
+	if err != nil {
+		return updatedCampaign, err
+	}
+	return updatedCampaign, nil
 }
